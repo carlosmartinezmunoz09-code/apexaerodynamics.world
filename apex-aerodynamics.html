@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Aerodynamics — Unlocking Global Agility</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a0f1e;
+  --deep: #060c18;
+  --gold: #c9a84c;
+  --gold-light: #e8c876;
+  --gold-dim: #8a6e2f;
+  --white: #f0ede6;
+  --off-white: #c8c4b8;
+  --blue-accent: #1a3a6e;
+  --blue-mid: #1e4d8c;
+  --panel: rgba(255,255,255,0.03);
+  --border: rgba(201,168,76,0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--deep);
+  color: var(--white);
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(201,168,76,0.5);
+  border-radius: 50%;
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.12s ease, width 0.2s, height 0.2s, border-color 0.2s;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(6,12,24,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 36px; height: 36px;
+  position: relative;
+}
+.nav-logo-icon svg { width: 100%; height: 100%; }
+.nav-logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.nav-logo-text span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--off-white);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  padding: 10px 24px;
+  border: 1px solid var(--gold);
+  color: var(--gold) !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.2em !important;
+}
+.nav-cta:hover { background: rgba(201,168,76,0.1); }
+.nav-cta::after { display: none !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(26,58,110,0.4) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 40%),
+              linear-gradient(135deg, #060c18 0%, #0a0f1e 50%, #060c18 100%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 70%);
+}
+
+.hero-plane {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 65%;
+  opacity: 0.15;
+  filter: blur(0.5px);
+  animation: planeDrift 8s ease-in-out infinite;
+}
+
+@keyframes planeDrift {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-52%) translateX(-10px); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 60px;
+  max-width: 700px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-title strong {
+  font-weight: 700;
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--off-white);
+  line-height: 1.8;
+  margin-bottom: 48px;
+  max-width: 520px;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  animation: fadeUp 0.8s ease 0.8s both;
+}
+
+.btn-primary {
+  padding: 16px 36px;
+  background: var(--gold);
+  color: var(--deep);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: none;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-light);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-ghost {
+  padding: 16px 36px;
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-ghost:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+
+.hero-stats {
+  position: absolute;
+  bottom: 60px;
+  left: 60px;
+  right: 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  animation: fadeUp 0.8s ease 1s both;
+}
+.hero-stat {
+  padding: 24px 28px;
+  background: rgba(6,12,24,0.8);
+  backdrop-filter: blur(10px);
+}
+.hero-stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.hero-stat-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--off-white);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SECTION BASE */
+section { position: relative; }
+
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+.section-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--white);
+}
+.section-title em { font-style: italic; color: var(--gold); }
+.section-divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 24px auto 0;
+}
+
+/* PROBLEM SECTION */
+#problem {
+  padding: 140px 60px;
+  background: linear-gradient(to bottom, var(--deep), var(--navy));
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.problem-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+.problem-text p {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--off-white);
+  margin-bottom: 20px;
+}
+
+.problem-callout {
+  border-left: 2px solid var(--gold);
+  padding: 20px 28px;
+  background: rgba(201,168,76,0.04);
+  margin: 32px 0;
+}
+.problem-callout p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.problem-data {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.data-card {
+  border: 1px solid var(--border);
+  padding: 32px;
+  background: var(--panel);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.data-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--gold);
+}
+.data-card:hover { border-color: rgba(201,168,76,0.5); }
+
+.data-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.data-desc {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--off-white);
+  line-height: 1.6;
+}
+
+/* SOLUTION SECTION */
+#solution {
+  padding: 140px 60px;
+  background: var(--navy);
+}
+
+.solution-intro {
+  max-width: 800px;
+  margin: 0 auto 100px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--off-white);
+}
+
+.tech-pillars {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+
+.tech-pillar {
+  background: var(--navy);
+  padding: 52px 48px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s;
+}
+.tech-pillar:hover { background: rgba(201,168,76,0.03); }
+
+.tech-pillar-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold-dim);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.tech-pillar-icon {
+  width: 56px; height: 56px;
+  margin-bottom: 24px;
+  color: var(--gold);
+}
+
+.tech-pillar h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.tech-pillar h3 em { color: var(--gold); font-style: italic; }
+
+.tech-pillar p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--off-white);
+  margin-bottom: 24px;
+}
+
+.tech-spec-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tech-spec-list li {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tech-spec-list li::before {
+  content: '→';
+  opacity: 0.6;
+}
+
+/* HOW IT WORKS */
+#technology {
+  padding: 140px 60px;
+  background: linear-gradient(to bottom, var(--navy), var(--deep));
+  overflow: hidden;
+}
+
+.tech-flow {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.tech-flow-line {
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  transform: translateX(-50%);
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  margin-bottom: 80px;
+  align-items: center;
+}
+.flow-step:nth-child(even) .flow-content-left { order: 3; text-align: left; }
+.flow-step:nth-child(even) .flow-content-right { order: 1; text-align: right; }
+.flow-step:nth-child(even) .flow-node { order: 2; }
+
+.flow-content-left, .flow-content-right {
+  padding: 40px;
+}
+.flow-content-left { text-align: right; }
+
+.flow-step h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.flow-step p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--off-white);
+}
+
+.flow-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2;
+}
+.flow-node-circle {
+  width: 56px; height: 56px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--deep);
+  color: var(--gold);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* IMPACT SECTION */
+#impact {
+  padding: 140px 60px;
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+}
+
+#impact::before {
+  content: '';
+  position: absolute;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.impact-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.impact-big-stat {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 80px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.impact-big-stat::before {
+  content: 'IMPACT';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16rem;
+  font-weight: 700;
+  color: rgba(201,168,76,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.impact-big-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 8vw, 9rem);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.impact-big-label {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--off-white);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.impact-card {
+  border: 1px solid var(--border);
+  padding: 48px;
+  background: var(--panel);
+  position: relative;
+}
+.impact-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.impact-card p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--off-white);
+}
+.impact-card-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+/* MARKET SECTION */
+#market {
+  padding: 140px 60px;
+  background: var(--navy);
+}
+
+.market-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  margin-bottom: 80px;
+}
+
+.market-segment {
+  background: var(--navy);
+  padding: 48px 36px;
+  text-align: center;
+  transition: background 0.3s;
+}
+.market-segment:hover { background: rgba(201,168,76,0.04); }
+.market-segment-icon {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  display: block;
+}
+.market-segment h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.market-segment p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--off-white);
+  margin-bottom: 24px;
+}
+.market-tag {
+  display: inline-block;
+  padding: 4px 14px;
+  border: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+}
+
+.economic-table {
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.economic-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.economic-table th {
+  padding: 20px 28px;
+  background: rgba(201,168,76,0.08);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.economic-table td {
+  padding: 20px 28px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--off-white);
+  border-bottom: 1px solid rgba(201,168,76,0.06);
+}
+.economic-table tr:last-child td { border-bottom: none; }
+.economic-table tr:hover td { background: rgba(201,168,76,0.02); }
+.td-gold { color: var(--gold) !important; font-weight: 600; }
+
+/* ROADMAP */
+#roadmap {
+  padding: 140px 60px;
+  background: linear-gradient(to bottom, var(--navy), var(--deep));
+}
+
+.roadmap-timeline {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+.roadmap-timeline::before {
+  content: '';
+  position: absolute;
+  left: 40px; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1));
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+  position: relative;
+}
+.timeline-dot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4px;
+}
+.timeline-dot-inner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  background: var(--deep);
+  position: relative;
+}
+.timeline-dot-inner.active {
+  background: var(--gold);
+  box-shadow: 0 0 20px rgba(201,168,76,0.4);
+}
+
+.timeline-content {
+  border: 1px solid var(--border);
+  padding: 36px;
+  background: var(--panel);
+}
+.timeline-year {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+.timeline-content h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.timeline-content p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--off-white);
+}
+.timeline-milestones {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.milestone-tag {
+  padding: 4px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--gold-dim);
+  font-family: 'Space Mono', monospace;
+}
+
+/* TEAM / ABOUT */
+#about {
+  padding: 140px 60px;
+  background: var(--deep);
+}
+
+.about-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.about-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.about-text h3 em { color: var(--gold); font-style: italic; }
+.about-text p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--off-white);
+  margin-bottom: 20px;
+}
+
+.about-visual {
+  position: relative;
+  height: 450px;
+}
+.about-frame {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.about-frame-inner {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 8rem;
+  font-weight: 700;
+  color: rgba(201,168,76,0.06);
+  letter-spacing: -0.05em;
+  user-select: none;
+}
+.about-frame-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, var(--deep) 100%);
+}
+.about-values {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.value-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.value-bar {
+  flex: 1;
+  height: 1px;
+  background: rgba(201,168,76,0.2);
+}
+.value-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+}
+.value-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--white);
+  min-width: 50px;
+  text-align: right;
+}
+
+.team-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+.team-card {
+  background: var(--deep);
+  padding: 48px 36px;
+  text-align: center;
+  transition: background 0.3s;
+}
+.team-card:hover { background: rgba(201,168,76,0.03); }
+.team-avatar {
+  width: 80px; height: 80px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(201,168,76,0.05);
+}
+.team-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.team-card .role {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+.team-card p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--off-white);
+}
+
+/* FAQ / TECHNICAL DEPTH */
+#technical {
+  padding: 140px 60px;
+  background: var(--navy);
+}
+
+.faq-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--border);
+}
+.faq-item {
+  background: var(--navy);
+  border-bottom: 1px solid rgba(201,168,76,0.06);
+  overflow: hidden;
+}
+.faq-question {
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: none;
+  transition: background 0.2s;
+}
+.faq-question:hover { background: rgba(201,168,76,0.03); }
+.faq-question h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--white);
+  flex: 1;
+}
+.faq-toggle {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.faq-answer-inner {
+  padding: 0 36px 28px;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--off-white);
+}
+.faq-item.open .faq-answer { max-height: 400px; }
+.faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+/* CTA */
+#contact {
+  padding: 160px 60px;
+  background: var(--deep);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#contact::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: block;
+}
+.cta-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 32px;
+}
+.cta-title em { color: var(--gold); font-style: italic; }
+.cta-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--off-white);
+  line-height: 1.8;
+  max-width: 560px;
+  margin: 0 auto 56px;
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-input {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.form-input::placeholder { color: rgba(200,196,184,0.4); }
+.form-input:focus { border-color: rgba(201,168,76,0.5); }
+.form-select {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--off-white);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  cursor: none;
+  transition: border-color 0.3s;
+}
+.form-select option { background: var(--navy); }
+.form-select:focus { border-color: rgba(201,168,76,0.5); }
+.form-textarea {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  outline: none;
+  resize: none;
+  height: 120px;
+  transition: border-color 0.3s;
+}
+.form-textarea:focus { border-color: rgba(201,168,76,0.5); }
+.form-submit {
+  padding: 18px;
+  background: var(--gold);
+  border: none;
+  color: var(--deep);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: background 0.3s;
+}
+.form-submit:hover { background: var(--gold-light); }
+
+/* FOOTER */
+footer {
+  padding: 60px 60px 40px;
+  background: #030710;
+  border-top: 1px solid var(--border);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+.footer-brand p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(200,196,184,0.5);
+  margin-top: 16px;
+  max-width: 280px;
+}
+.footer-col h5 {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgba(200,196,184,0.5);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--off-white); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid rgba(201,168,76,0.06);
+}
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: rgba(200,196,184,0.3);
+  font-family: 'Space Mono', monospace;
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 24px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(2,1fr); left: 24px; right: 24px; }
+  .problem-grid, .about-grid, .impact-grid { grid-template-columns: 1fr; }
+  .tech-pillars, .market-grid, .team-grid { grid-template-columns: 1fr; }
+  section { padding: 80px 24px !important; }
+  .tech-flow-line { display: none; }
+  .flow-step { grid-template-columns: 1fr; }
+  .flow-content-left, .flow-content-right { text-align: left; padding: 20px 0; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 28L20 8L35 28H25L20 18L15 28H5Z" fill="#c9a84c" opacity="0.9"/>
+        <path d="M12 28L20 14L28 28" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.4"/>
+        <circle cx="20" cy="8" r="2" fill="#c9a84c"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">Apex <span>Aerodynamics</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <!-- SVG Plane Silhouette -->
+  <svg class="hero-plane" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 160 L700 100 L850 130 L700 160 L400 180 L50 160Z" fill="white" opacity="0.6"/>
+    <path d="M300 160 L600 80 L650 120 L300 160Z" fill="white" opacity="0.3"/>
+    <path d="M400 160 L700 200 L750 190 L700 165 L400 160Z" fill="white" opacity="0.2"/>
+    <path d="M50 160 L700 100" stroke="white" stroke-width="0.5" opacity="0.4"/>
+    <ellipse cx="860" cy="133" rx="20" ry="6" fill="white" opacity="0.7"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-tag">Moonshot Project 2026 — Apex Aerodynamics</div>
+    <h1 class="hero-title">
+      The Future of<br>
+      <em>Supersonic</em><br>
+      <strong>Flight is Clean.</strong>
+    </h1>
+    <p class="hero-sub">We are engineering zero-emission supersonic commercial aircraft that harness hydrogen fuel cells, biomimetic surfaces, and NASA-proven aero-shaping to make Mach 1.5+ flight clean, quiet, and viable for the first time in history.</p>
+    <div class="hero-actions">
+      <a href="#solution" class="btn-primary"><span>Explore the Solution</span></a>
+      <a href="#contact" class="btn-ghost">
+        <span>Partner With Us</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">Mach 1.5+</div>
+      <div class="hero-stat-label">Target Cruise Speed</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">0%</div>
+      <div class="hero-stat-label">Carbon Emissions</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">&lt;75 dB</div>
+      <div class="hero-stat-label">Perceived Sonic Loudness</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">1.8B t</div>
+      <div class="hero-stat-label">CO₂ Prevented by 2040</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div style="padding: 140px 60px; background: linear-gradient(to bottom, var(--deep), var(--navy));">
+  <div class="section-header reveal">
+    <span class="section-tag">// The Problem</span>
+    <h2 class="section-title">Aviation is <em>locked</em> in a subsonic bottleneck</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="problem-grid" style="max-width:1200px;margin:0 auto;">
+    <div class="problem-text reveal">
+      <h3>The world demands speed.<br>The planet demands zero emissions.<br>Aviation delivers neither.</h3>
+      <p>Long-haul flights over 4,000 miles are a massive carbon sink, with international aviation accounting for nearly 2.5% of global CO₂ emissions today — a figure projected to rise to 22% by 2050 as other sectors decarbonize. Yet the industry remains chained to kerosene and constrained to subsonic speeds.</p>
+      <p>Any attempt to break the sound barrier triggers a second crisis: the sonic boom. Generating up to 110 decibels on the ground, it has led to a global ban on commercial supersonic flight over land, confining fast travel to ocean corridors and making it commercially non-viable.</p>
+      <div class="problem-callout">
+        <p>"We face a trilemma: speed destroys efficiency, supersonic destroys quiet, and sustainable fuel has too little power. No current aircraft solves all three simultaneously."</p>
+      </div>
+      <p>This is the Supersonic Trilemma — and it has remained unsolved since Concorde retired in 2003. We are solving it.</p>
+    </div>
+
+    <div class="problem-data reveal">
+      <div class="data-card">
+        <div class="data-num">4.2B</div>
+        <div class="data-desc">Man-hours wasted annually in long-haul trans-oceanic transit. For global business, that is an immeasurable drag on productivity, dealmaking, and human connection.</div>
+      </div>
+      <div class="data-card">
+        <div class="data-num">2.5%</div>
+        <div class="data-desc">Share of global CO₂ currently attributed to aviation. With freight and contrail warming effects included, aviation's true climate impact is 3–4× higher — and growing.</div>
+      </div>
+      <div class="data-card">
+        <div class="data-num">110 dB</div>
+        <div class="data-desc">Sonic boom intensity generated by conventional supersonic aircraft. Equivalent to standing 300 metres from a jet engine. The reason overland supersonic flight is globally banned.</div>
+      </div>
+      <div class="data-card">
+        <div class="data-num">23 Years</div>
+        <div class="data-desc">Since Concorde's retirement in 2003. For over two decades, no commercially viable supersonic passenger aircraft has flown a single revenue route.</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div style="padding: 140px 60px; background: var(--navy);">
+  <div class="section-header reveal">
+    <span class="section-tag">// The Solution</span>
+    <h2 class="section-title">Four <em>interlocking</em> breakthroughs</h2>
+    <div class="section-divider"></div>
+  </div>
+  <p class="solution-intro reveal">The Apex-H supersonic liner is not a single invention — it is a systems integration of four concurrent engineering frontiers, each solving one leg of the trilemma, each amplifying the effectiveness of the others.</p>
+
+  <div class="tech-pillars">
+    <div class="tech-pillar reveal">
+      <span class="tech-pillar-num">01 — BIOMIMETIC SKIN</span>
+      <svg class="tech-pillar-icon" viewBox="0 0 56 56" fill="none"><path d="M10 40 C15 20 35 20 46 28" stroke="#c9a84c" stroke-width="1.5"/><path d="M10 34 C17 16 38 18 46 24" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><ellipse cx="12" cy="30" rx="4" ry="8" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" stroke-width="0.8"/></svg>
+      <h3>Shark &amp; <em>Dolphin</em> Surfaces</h3>
+      <p>The aircraft's exterior uses two layers of biological intelligence. Microscopic riblet structures modelled on shark dermal denticles prevent turbulent eddies from forming within the boundary layer, reducing skin friction drag by up to 10%. Beneath these, piezoelectric actuator arrays modelled on dolphin compliant skin actively dampen pressure fluctuations — effectively teaching the aircraft's hull to "feel" and counteract turbulence in real time.</p>
+      <ul class="tech-spec-list">
+        <li>Passive riblet micro-geometry: 5–10% drag reduction</li>
+        <li>Active piezoelectric dampening layer</li>
+        <li>LH₂-cooled to prevent thermal degradation at Mach 1.5+</li>
+        <li>Biomimetic surface proven in CFD simulation</li>
+      </ul>
+    </div>
+
+    <div class="tech-pillar reveal">
+      <span class="tech-pillar-num">02 — HYDROGEN FUEL CELLS</span>
+      <svg class="tech-pillar-icon" viewBox="0 0 56 56" fill="none"><rect x="10" y="16" width="36" height="24" rx="3" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,0.05)"/><path d="M22 16V40M34 16V40M10 28H46" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/><path d="M22 24 L28 20 L34 24" stroke="#c9a84c" stroke-width="1"/></svg>
+      <h3>Cryogenic <em>LH₂</em> Power</h3>
+      <p>Liquid hydrogen stored at −253°C in vacuum-insulated fuselage tanks feeds a Proton Exchange Membrane (PEM) fuel cell stack. The electrochemical reaction produces only water vapour and high-voltage DC electricity — zero CO₂, zero NOₓ, zero particulates. This electricity drives the superconducting turbofan motors and all onboard systems through a unified DC microgrid. The cold hydrogen performs double duty as a coolant for the aircraft's electric motors, wiring, and biomimetic skin before reaching the fuel cells.</p>
+      <ul class="tech-spec-list">
+        <li>PEM fuel cell stack: 95%+ electrochemical efficiency</li>
+        <li>Only byproduct: pure H₂O (recycled onboard)</li>
+        <li>LH₂ acts as heat sink before conversion</li>
+        <li>Superconducting DC microgrid distribution</li>
+      </ul>
+    </div>
+
+    <div class="tech-pillar reveal">
+      <span class="tech-pillar-num">03 — SUPERCONDUCTING TURBOFANS</span>
+      <svg class="tech-pillar-icon" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="16" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,0.05)"/><circle cx="28" cy="28" r="6" stroke="#c9a84c" stroke-width="1"/><path d="M28 12 L28 6M28 44 L28 50M12 28 L6 28M44 28 L50 28" stroke="#c9a84c" stroke-width="1" opacity="0.5"/></svg>
+      <h3>Zero-Resistance <em>Electric</em> Propulsion</h3>
+      <p>The cryogenic LH₂ fuel cools the motor windings and electrical bus to near absolute zero, inducing a superconducting state with zero electrical resistance. This allows the turbofan electric motors to carry 10× the power of conventional copper windings at a fraction of the weight — solving the fundamental energy density problem that has made electric supersonic flight previously impossible. High-bypass fan blades are optimised for the unique acoustic and aerodynamic profile of the aircraft.</p>
+      <ul class="tech-spec-list">
+        <li>Superconducting motor: 10× power-to-weight vs. copper</li>
+        <li>LH₂-cooled bus eliminates resistive heat losses</li>
+        <li>Variable-pitch fan for subsonic/supersonic transition</li>
+        <li>90% of fuel cell output routed to propulsion</li>
+      </ul>
+    </div>
+
+    <div class="tech-pillar reveal">
+      <span class="tech-pillar-num">04 — NASA AERO-SHAPING</span>
+      <svg class="tech-pillar-icon" viewBox="0 0 56 56" fill="none"><path d="M4 36 L28 10 L52 36" stroke="#c9a84c" stroke-width="1.5" fill="rgba(201,168,76,0.05)"/><path d="M4 36 L28 18 L52 36" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/><line x1="28" y1="10" x2="28" y2="46" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/></svg>
+      <h3>QueSST <em>Quiet</em> Supersonic Shaping</h3>
+      <p>Derived directly from NASA's X-59 QueSST program — the most advanced quiet supersonic aircraft ever built — the Apex-H adopts the characteristic elongated needle nose that distributes shock wave generation across the entire fuselage rather than concentrating it at the bow. The engines are mounted dorsally (above the wing), using the aircraft body itself as a noise shield, reflecting engine noise and shockwaves skyward. The result is a perceived ground-level "sonic thump" below 75 dB — quiet enough for overland commercial operation.</p>
+      <ul class="tech-spec-list">
+        <li>&lt;75 dB perceived loudness at ground level</li>
+        <li>Dorsal engine mounting for noise shielding</li>
+        <li>Distributed shock generation via needle-nose geometry</li>
+        <li>Based on validated NASA X-59 aerodynamic data</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="technology">
+  <div style="padding: 140px 60px; background: linear-gradient(to bottom, var(--navy), var(--deep)); overflow:hidden;">
+  <div class="section-header reveal">
+    <span class="section-tag">// System Architecture</span>
+    <h2 class="section-title">How the <em>entire system</em> works together</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="tech-flow" style="max-width:1100px;margin:0 auto;position:relative;">
+    <div class="tech-flow-line"></div>
+
+    <div class="flow-step reveal">
+      <div class="flow-content-left" style="text-align:right;padding:40px;">
+        <h4>Liquid Hydrogen Storage</h4>
+        <p>Vacuum-insulated cryogenic tanks integrated into the fuselage store LH₂ at −253°C. The tanks are shaped and positioned to maintain the aircraft's aerodynamic balance and serve as structural elements, reducing dead weight.</p>
+      </div>
+      <div class="flow-node" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;">
+        <div class="flow-node-circle">01</div>
+      </div>
+      <div style="padding:40px;"></div>
+    </div>
+
+    <div class="flow-step reveal">
+      <div style="padding:40px;"></div>
+      <div class="flow-node" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;">
+        <div class="flow-node-circle">02</div>
+      </div>
+      <div style="padding:40px;">
+        <h4>Cryogenic Pre-Cooling Loop</h4>
+        <p>Before reaching the fuel cells, LH₂ is circulated through the electric motor housings, superconducting bus bars, and the inner layers of the biomimetic skin — absorbing waste heat and simultaneously inducing the superconducting state in the motors.</p>
+      </div>
+    </div>
+
+    <div class="flow-step reveal">
+      <div style="text-align:right;padding:40px;">
+        <h4>PEM Fuel Cell Conversion</h4>
+        <p>Warmed hydrogen enters the PEM fuel cell stack where it reacts with atmospheric oxygen. This electrochemical reaction generates 90+ kV of DC electricity and pure water — with zero combustion, zero CO₂, and zero particulate output.</p>
+      </div>
+      <div class="flow-node" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;">
+        <div class="flow-node-circle">03</div>
+      </div>
+      <div style="padding:40px;"></div>
+    </div>
+
+    <div class="flow-step reveal">
+      <div style="padding:40px;"></div>
+      <div class="flow-node" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;">
+        <div class="flow-node-circle">04</div>
+      </div>
+      <div style="padding:40px;">
+        <h4>Superconducting DC Microgrid</h4>
+        <p>High-voltage DC electricity flows through cryogenically cooled superconducting cables — zero resistance, zero heat loss — distributing 90% of power to the turbofan motors and 10% to all cabin and avionics systems.</p>
+      </div>
+    </div>
+
+    <div class="flow-step reveal">
+      <div style="text-align:right;padding:40px;">
+        <h4>Supersonic Propulsion</h4>
+        <p>Superconducting electric motors spin the variable-pitch turbofan blades. At subsonic speeds, large fan diameter maximises efficiency. As the aircraft transitions through Mach 1, blade pitch adjusts for minimum wave drag — powered by electricity alone, with zero combustion at any phase of flight.</p>
+      </div>
+      <div class="flow-node" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;">
+        <div class="flow-node-circle">05</div>
+      </div>
+      <div style="padding:40px;"></div>
+    </div>
+
+    <div class="flow-step reveal">
+      <div style="padding:40px;"></div>
+      <div class="flow-node" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;z-index:2;">
+        <div class="flow-node-circle">06</div>
+      </div>
+      <div style="padding:40px;">
+        <h4>Water Recovery &amp; Reuse</h4>
+        <p>The fuel cell's water byproduct is captured and used onboard for passenger amenities and — critically — as evaporative coolant for the outer biomimetic skin, which experiences extreme frictional heating at Mach 1.5+.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div style="padding: 140px 60px; background: var(--deep); position:relative; overflow:hidden;">
+  <div style="position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);pointer-events:none;"></div>
+  <div class="section-header reveal">
+    <span class="section-tag">// Environmental & Economic Impact</span>
+    <h2 class="section-title">The numbers that <em>matter</em></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="text-align:center;padding:80px;border:1px solid var(--border);background:var(--panel);position:relative;overflow:hidden;margin-bottom:2px;" class="reveal">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:16rem;font-weight:700;color:rgba(201,168,76,0.03);white-space:nowrap;pointer-events:none;">IMPACT</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,8vw,9rem);font-weight:300;color:var(--gold);line-height:1;margin-bottom:20px;">1.8 Bn t</div>
+      <div style="font-size:1rem;font-weight:400;letter-spacing:0.1em;color:var(--off-white);max-width:500px;margin:0 auto;line-height:1.7;">CO₂ prevented from entering the atmosphere by 2040, achieved by replacing just 15% of the global long-haul fleet with Apex-H aircraft — equivalent to removing every car in Europe from the road for three years.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);">
+      <div style="border:none;padding:48px;background:var(--panel);" class="reveal">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:12px;">50%</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:16px;">Reduction in Trans-Oceanic Flight Time</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--off-white);">New York to London drops from 7 hours to under 3.5. Dubai to Singapore from 7 hours to under 4. Every major long-haul route fundamentally restructured. The total global recovery in productive time: 2.1 billion man-hours annually returned to the global workforce.</p>
+      </div>
+      <div style="border:none;padding:48px;background:var(--panel);" class="reveal">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:12px;">2×</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:16px;">Revenue Per Aircraft Per Day</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--off-white);">An aircraft that completes a route in half the time can fly twice as many revenue routes daily. For an airline operating 50 Apex-H aircraft, that represents a potential doubling of fleet yield — making the economics of the aircraft compelling even before carbon tax savings are accounted for.</p>
+      </div>
+      <div style="border:none;padding:48px;background:var(--panel);" class="reveal">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:12px;">Zero</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:16px;">Carbon Tax Liability</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--off-white);">With CORSIA carbon offsetting requirements tightening post-2030 and EU ETS aviation inclusion expanding, each subsonic kerosene flight carries a growing tax liability. The Apex-H incurs zero carbon cost — a compounding competitive advantage as regulations accelerate.</p>
+      </div>
+      <div style="border:none;padding:48px;background:var(--panel);" class="reveal">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:12px;">&lt;75 dB</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:16px;">Overland Flight Clearance</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:var(--off-white);">The QueSST sonic thump at below 75 perceived decibels is the threshold that NASA and the FAA have indicated would support lifting the overland supersonic ban. Apex-H is the first commercial platform designed from the outset to meet this threshold — opening every land route to supersonic service.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- MARKET -->
+<section id="market">
+  <div style="padding: 140px 60px; background: var(--navy);">
+  <div class="section-header reveal">
+    <span class="section-tag">// Market & Economics</span>
+    <h2 class="section-title">Who <em>buys</em> this. Why they <em>must</em>.</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-bottom:60px;">
+      <div style="background:var(--navy);padding:48px 36px;text-align:center;" class="reveal">
+        <span style="font-size:2.5rem;margin-bottom:20px;display:block;">✈</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Tier-1 Airlines</h4>
+        <p style="font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--off-white);margin-bottom:24px;">Emirates, Qatar Airways, British Airways, and United Airlines face mounting ESG pressure and carbon tax costs. The Apex-H offers a path to premium supersonic routes with zero carbon liability and double asset utilisation. A "green Concorde" is the product every premium airline has been waiting for.</p>
+        <span style="display:inline-block;padding:4px 14px;border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);">PRIMARY BUYER</span>
+      </div>
+      <div style="background:var(--navy);padding:48px 36px;text-align:center;" class="reveal">
+        <span style="font-size:2.5rem;margin-bottom:20px;display:block;">🫀</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Medical Logistics</h4>
+        <p style="font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--off-white);margin-bottom:24px;">Organ transplant viability is measured in hours. A Mach 1.5 aircraft capable of flying from Dubai to London in under 4 hours transforms what is medically possible in transplant surgery, specialist intervention, and pharmaceutical cold-chain logistics. Time literally saves lives.</p>
+        <span style="display:inline-block;padding:4px 14px;border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);">MISSION CRITICAL</span>
+      </div>
+      <div style="background:var(--navy);padding:48px 36px;text-align:center;" class="reveal">
+        <span style="font-size:2.5rem;margin-bottom:20px;display:block;">🌐</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Global Enterprises</h4>
+        <p style="font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--off-white);margin-bottom:24px;">For multinationals with operations across continents, the cost of a senior executive "travel day" lost to subsonic flight is enormous. Apex-H aircraft chartered or leased as corporate fleet assets would allow same-day returns from any major global city — changing how global business operates.</p>
+        <span style="display:inline-block;padding:4px 14px;border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);">CHARTER MARKET</span>
+      </div>
+    </div>
+
+    <div style="border:1px solid var(--border);overflow:hidden;" class="reveal">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="padding:20px 28px;background:rgba(201,168,76,0.08);font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:left;border-bottom:1px solid var(--border);">Metric</th>
+            <th style="padding:20px 28px;background:rgba(201,168,76,0.08);font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:left;border-bottom:1px solid var(--border);">Conventional Subsonic</th>
+            <th style="padding:20px 28px;background:rgba(201,168,76,0.08);font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:left;border-bottom:1px solid var(--border);">Apex-H Supersonic</th>
+            <th style="padding:20px 28px;background:rgba(201,168,76,0.08);font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:left;border-bottom:1px solid var(--border);">Advantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">Cruise Speed</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">~560 mph (Mach 0.85)</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">~1,150 mph (Mach 1.5+)</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">2× faster</td>
+          </tr>
+          <tr>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">Carbon Emissions</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">~90g CO₂/pax/km</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">0g CO₂/pax/km</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">Zero emission</td>
+          </tr>
+          <tr>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">Sonic Boom (Ground)</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">100–110 dB (banned)</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">&lt;75 dB perceived</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">Overland viable</td>
+          </tr>
+          <tr>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">Daily Route Cycles</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);border-bottom:1px solid rgba(201,168,76,0.06);">1 trans-oceanic cycle</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">2+ trans-oceanic cycles</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;border-bottom:1px solid rgba(201,168,76,0.06);">2× asset yield</td>
+          </tr>
+          <tr>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);">Carbon Tax Exposure</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--off-white);">Rising (CORSIA 2030+)</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;">None</td>
+            <td style="padding:20px 28px;font-size:0.9rem;color:var(--gold);font-weight:600;">Structural cost advantage</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div style="padding: 140px 60px; background: linear-gradient(to bottom, var(--navy), var(--deep));">
+  <div class="section-header reveal">
+    <span class="section-tag">// Development Roadmap</span>
+    <h2 class="section-title">From concept to <em>commercial flight</em></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div style="max-width:900px;margin:0 auto;position:relative;">
+    <div style="position:absolute;left:40px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.1));"></div>
+
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:40px;margin-bottom:60px;position:relative;" class="reveal">
+      <div style="display:flex;align-items:flex-start;justify-content:center;padding-top:4px;">
+        <div style="width:16px;height:16px;border:2px solid var(--gold);border-radius:50%;background:var(--gold);box-shadow:0 0 20px rgba(201,168,76,0.4);"></div>
+      </div>
+      <div style="border:1px solid var(--border);padding:36px;background:var(--panel);">
+        <span style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:12px;display:block;">2026 — NOW</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Foundational Research & IP Filing</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--off-white);">Computational Fluid Dynamics modelling of biomimetic skin riblet geometries at Mach 1.5. Partnership agreements with hydrogen fuel cell manufacturers. Preliminary aero-acoustic modelling based on X-59 datasets.</p>
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">CFD Modelling</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">IP Filing</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">Partner Agreements</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:40px;margin-bottom:60px;position:relative;" class="reveal">
+      <div style="display:flex;align-items:flex-start;justify-content:center;padding-top:4px;">
+        <div style="width:16px;height:16px;border:2px solid var(--gold);border-radius:50%;background:var(--deep);"></div>
+      </div>
+      <div style="border:1px solid var(--border);padding:36px;background:var(--panel);">
+        <span style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:12px;display:block;">2027–2028</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Component Validation at Scale</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--off-white);">Scaled wind tunnel testing of biomimetic surface geometries. PEM fuel cell stack integration with superconducting motor prototype in ground test rig. Acoustic modelling review with NASA Aeronautics Research Mission Directorate.</p>
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">Wind Tunnel</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">Motor Prototype</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">NASA Collaboration</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:40px;margin-bottom:60px;position:relative;" class="reveal">
+      <div style="display:flex;align-items:flex-start;justify-content:center;padding-top:4px;">
+        <div style="width:16px;height:16px;border:2px solid var(--gold);border-radius:50%;background:var(--deep);"></div>
+      </div>
+      <div style="border:1px solid var(--border);padding:36px;background:var(--panel);">
+        <span style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:12px;display:block;">2029–2031</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Integrated Demonstrator Aircraft</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--off-white);">Full-scale demonstrator aircraft integrating all four technology pillars. First supersonic test flights over approved oceanic corridors. FAA and EASA pre-certification engagement initiated. Airline Letter of Intent program launched.</p>
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">First Flight</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">FAA Engagement</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">Airline LOIs</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:40px;position:relative;" class="reveal">
+      <div style="display:flex;align-items:flex-start;justify-content:center;padding-top:4px;">
+        <div style="width:16px;height:16px;border:2px solid var(--gold);border-radius:50%;background:var(--deep);"></div>
+      </div>
+      <div style="border:1px solid var(--border);padding:36px;background:var(--panel);">
+        <span style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:12px;display:block;">2033–2036</span>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--white);margin-bottom:12px;">Commercial Certification & First Routes</h4>
+        <p style="font-size:0.9rem;font-weight:300;line-height:1.7;color:var(--off-white);">Type certification achieved. First commercial revenue flights on Dubai–London and New York–London routes. Production facility at scale. Target: 50 aircraft delivered to launch partners by 2040, preventing 1.8 billion tonnes of CO₂.</p>
+        <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">Type Certificate</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">Revenue Service</span>
+          <span style="padding:4px 12px;border:1px solid rgba(201,168,76,0.25);font-size:0.7rem;letter-spacing:0.1em;color:var(--gold-dim);font-family:'Space Mono',monospace;">50 Deliveries</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div style="padding: 140px 60px; background: var(--deep);">
+  <div class="section-header reveal">
+    <span class="section-tag">// About Apex Aerodynamics</span>
+    <h2 class="section-title">Built by those who <em>refuse</em> to accept the slow lane</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;margin-bottom:100px;" class="reveal">
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;line-height:1.2;color:var(--white);margin-bottom:28px;">We exist at the intersection of <em>biology, physics, and aeronautical engineering.</em></h3>
+        <p style="font-size:0.95rem;font-weight:300;line-height:1.9;color:var(--off-white);margin-bottom:20px;">Apex Aerodynamics was founded on a single conviction: that the trilemma of supersonic speed, environmental responsibility, and overland flight clearance is not a fundamental impossibility — it is a systems integration challenge that had simply never been properly assembled.</p>
+        <p style="font-size:0.95rem;font-weight:300;line-height:1.9;color:var(--off-white);margin-bottom:20px;">Our team draws from aeronautics, marine biology, materials science, and clean energy — fields that rarely speak to each other inside a single organisation. That cross-disciplinary lens is our structural advantage. The solutions were always there: in the skin of a mako shark, in the surface of a bottlenose dolphin, in NASA's hangar at Palmdale, in a hydrogen fuel cell stack at the University of Stuttgart.</p>
+        <p style="font-size:0.95rem;font-weight:300;line-height:1.9;color:var(--off-white);">Our mission is to assemble them into one aircraft — and in doing so, make the next century of human movement faster, cleaner, and quieter than the last.</p>
+      </div>
+
+      <div style="position:relative;height:450px;">
+        <div style="position:absolute;inset:0;border:1px solid var(--border);background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:8rem;font-weight:700;color:rgba(201,168,76,0.06);letter-spacing:-0.05em;user-select:none;">APEX</div>
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at center, transparent 40%, var(--deep) 100%);"></div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:32px;display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--white);min-width:50px;text-align:right;">4</div>
+            <div style="flex:1;height:1px;background:rgba(201,168,76,0.2);"></div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);">CORE TECHNOLOGIES</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--white);min-width:50px;text-align:right;">10yr</div>
+            <div style="flex:1;height:1px;background:rgba(201,168,76,0.2);"></div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);">FEASIBILITY WINDOW</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--white);min-width:50px;text-align:right;">0</div>
+            <div style="flex:1;height:1px;background:rgba(201,168,76,0.2);"></div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);">CO₂ PER FLIGHT</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--white);min-width:50px;text-align:right;">1</div>
+            <div style="flex:1;height:1px;background:rgba(201,168,76,0.2);"></div>
+            <div style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--gold);">MOONSHOT MISSION</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);">
+      <div style="background:var(--deep);padding:48px 36px;text-align:center;" class="reveal">
+        <div style="width:80px;height:80px;border:1px solid var(--border);border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);background:rgba(201,168,76,0.05);">RA</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--white);margin-bottom:6px;">Dr. R. Amir</h4>
+        <span style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:16px;display:block;">CHIEF AERODYNAMICS OFFICER</span>
+        <p style="font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--off-white);">Former NASA Aeronautics Research division. Specialist in supersonic boundary layer control and computational fluid dynamics. Led acoustic modelling for the X-59 QueSST program.</p>
+      </div>
+      <div style="background:var(--deep);padding:48px 36px;text-align:center;" class="reveal">
+        <div style="width:80px;height:80px;border:1px solid var(--border);border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);background:rgba(201,168,76,0.05);">SK</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--white);margin-bottom:6px;">S. Kirchner</h4>
+        <span style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:16px;display:block;">CHIEF PROPULSION ENGINEER</span>
+        <p style="font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--off-white);">Hydrogen propulsion specialist from DLR (German Aerospace Center). 12 years developing PEM fuel cell systems for aerospace applications. Published in Nature Energy on superconducting motor integration.</p>
+      </div>
+      <div style="background:var(--deep);padding:48px 36px;text-align:center;" class="reveal">
+        <div style="width:80px;height:80px;border:1px solid var(--border);border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--gold);background:rgba(201,168,76,0.05);">LO</div>
+        <h4 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--white);margin-bottom:6px;">Prof. L. Okafor</h4>
+        <span style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);margin-bottom:16px;display:block;">CHIEF BIOMIMETICS SCIENTIST</span>
+        <p style="font-size:0.85rem;font-weight:300;line-height:1.7;color:var(--off-white);">Marine biology PhD from MIT. Pioneer in translating cetacean hydrodynamics to aerospace surface design. Holds four patents on piezoelectric active-surface dampening systems.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- TECHNICAL FAQ -->
+<section id="technical">
+  <div style="padding: 140px 60px; background: var(--navy);">
+  <div class="section-header reveal">
+    <span class="section-tag">// Technical Depth</span>
+    <h2 class="section-title">Answering the <em>hard questions</em></h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:2px;background:var(--border);" class="reveal">
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Why hydrogen fuel cells rather than direct hydrogen combustion?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Direct hydrogen combustion — burning H₂ in a modified jet engine — does eliminate CO₂, but it still produces NOₓ (nitrogen oxides) at high combustion temperatures, which are potent greenhouse gases and ozone depletes. It also wastes enormous amounts of the hydrogen's energy as heat rather than converting it to useful work. PEM fuel cells, by contrast, are electrochemical converters operating at relatively low temperatures (~80°C). They convert up to 60% of hydrogen's energy directly to electricity with zero NOₓ, and the electricity then drives superconducting motors at near 100% efficiency. The combined efficiency of the fuel cell + superconducting motor system is fundamentally superior to combustion — the only challenge is achieving sufficient power density, which is addressed through superconductivity enabled by the LH₂ coolant itself.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>How does superconductivity solve the power density problem?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">The fundamental barrier to electric supersonic flight has been that conventional electric motors are too heavy relative to the power they produce. A turbofan engine generating 30,000 lbf of thrust requires an enormous amount of electrical power — and conventional copper-wound motors need to be very large and heavy to carry that current without resistive heating. Superconducting materials, when cooled below their critical temperature, have literally zero electrical resistance. This means the same motor winding can carry 10–15× more current, generating proportionally more magnetic force and thus 10–15× more torque from the same physical size and weight. The key insight in the Apex-H design is that the cryogenic LH₂ fuel — which must be stored at −253°C anyway — provides the cooling "for free." The motor cooling is a thermodynamic bonus of the fuel system rather than an additional weight or energy penalty.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>How exactly does the biomimetic skin reduce drag at supersonic speeds?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">At supersonic speeds, the dominant drag components are wave drag (from shock waves) and skin friction drag (from turbulent boundary layer interaction with the surface). The NASA aero-shaping (long needle nose, area-ruled fuselage) addresses wave drag. The biomimetic skin specifically targets skin friction drag. Shark dermal denticles — microscopic V-shaped ridges running parallel to airflow — prevent the formation of large turbulent eddies in the boundary layer by creating micro-vortices that keep the main flow attached and orderly. At Mach 1.5, where the boundary layer has very little time to develop turbulence, properly scaled riblets can deliver 5–10% reduction in skin friction. The dolphin-inspired active layer adds a second mechanism: piezoelectric actuators that sense incoming pressure fluctuations and deform the outer surface at microsecond timescales to counteract them — analogous to active noise cancellation but for fluid dynamics. Together, they address skin friction from two directions simultaneously.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>Is the overland sonic boom ban actually likely to change?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">This is the regulatory crux of the entire commercial supersonic market, and the answer is: yes, with the right technology. The 1973 FAA ban on overland supersonic flight was noise-based — there was no technology at the time to reduce the sonic boom to acceptable levels, so the rule was absolute. NASA's X-59 QueSST program was specifically designed to demonstrate that aerodynamic shaping can reduce the sonic boom to a "thump" below 75 perceived decibels. NASA has formally stated that if the X-59 data confirms this threshold, it will petition the ICAO (International Civil Aviation Organization) and the FAA to write a new noise standard for supersonic aircraft — effectively creating a regulatory path for overland supersonic flight. The Apex-H is designed specifically to meet that same 75 dB threshold using the same design principles. The regulatory opening is expected between 2028–2032, precisely aligned with Apex-H's development timeline.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <h4>What happens to the water vapour produced by the fuel cells at altitude?</h4>
+        <div class="faq-toggle">+</div>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">Water vapour at cruise altitude (~50,000 feet for supersonic flight) does present a contrail formation risk, which is a legitimate climate consideration. However, several factors mitigate this. First, supersonic cruise altitudes are above the typical contrail formation zone (~25,000–40,000 feet), reducing persistent contrail likelihood. Second, the quantity of water produced is proportionally far less than the exhaust water from conventional combustion engines (which also produce CO₂, NOₓ, and soot particles that nucleate ice crystals). Third, a portion of the fuel cell water is captured onboard and used for cooling and passenger amenities, reducing the amount released to atmosphere. This is an area of active atmospheric science research, and the Apex-H design team will work with climate scientists during the certification process to fully characterise and minimise the atmospheric water impact.</div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+<!-- CONTACT / CTA -->
+<section id="contact">
+  <div style="padding: 160px 60px; background: var(--deep); text-align:center; position:relative; overflow:hidden;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);pointer-events:none;"></div>
+  <span style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:block;" class="reveal">// Partner With Apex</span>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:32px;" class="reveal">The world's first <em>zero-emission</em><br>supersonic aircraft needs<br>the right partners.</h2>
+  <p style="font-size:1rem;font-weight:300;color:var(--off-white);line-height:1.8;max-width:560px;margin:0 auto 56px;" class="reveal">Whether you are an airline executive, an aerospace engineer, a hydrogen infrastructure investor, or a regulatory body exploring the future of sustainable supersonic travel — we want to hear from you.</p>
+
+  <div style="max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:16px;" class="reveal">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <input type="text" class="form-input" placeholder="Full Name">
+      <input type="text" class="form-input" placeholder="Organisation">
+    </div>
+    <input type="email" class="form-input" placeholder="Email Address">
+    <select class="form-select">
+      <option value="" disabled selected>Area of Interest</option>
+      <option>Airline Partnership / Launch Customer</option>
+      <option>Investment & Venture Capital</option>
+      <option>Technical Collaboration / Research</option>
+      <option>Regulatory & Policy Engagement</option>
+      <option>Media & Press Enquiry</option>
+      <option>Hydrogen Infrastructure</option>
+    </select>
+    <textarea class="form-textarea" placeholder="Tell us about your interest in Apex Aerodynamics..."></textarea>
+    <button class="form-submit">Send Enquiry</button>
+  </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px;">
+    <div>
+      <a href="#" class="nav-logo" style="display:inline-flex;margin-bottom:16px;">
+        <div class="nav-logo-icon" style="width:32px;height:32px;">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M5 28L20 8L35 28H25L20 18L15 28H5Z" fill="#c9a84c" opacity="0.9"/><circle cx="20" cy="8" r="2" fill="#c9a84c"/></svg>
+        </div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--white);letter-spacing:0.05em;margin-left:10px;">Apex <span style="color:var(--gold);">Aerodynamics</span></span>
+      </a>
+      <p style="font-size:0.85rem;font-weight:300;line-height:1.8;color:rgba(200,196,184,0.5);max-width:280px;">Unlocking Global Agility through Supersonic Capability. Zero emissions. Zero sonic boom. Mach 1.5+.</p>
+      <p style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--gold-dim);margin-top:20px;">apexaerodynamics.world</p>
+    </div>
+    <div>
+      <h5 style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Company</h5>
+      <ul style="list-style:none;">
+        <li style="margin-bottom:12px;"><a href="#about" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;transition:color 0.3s;">About Us</a></li>
+        <li style="margin-bottom:12px;"><a href="#roadmap" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Roadmap</a></li>
+        <li style="margin-bottom:12px;"><a href="#" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Careers</a></li>
+        <li style="margin-bottom:12px;"><a href="#contact" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Press</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Technology</h5>
+      <ul style="list-style:none;">
+        <li style="margin-bottom:12px;"><a href="#solution" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Biomimetic Skin</a></li>
+        <li style="margin-bottom:12px;"><a href="#solution" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Hydrogen Power</a></li>
+        <li style="margin-bottom:12px;"><a href="#solution" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Superconducting Motors</a></li>
+        <li style="margin-bottom:12px;"><a href="#solution" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">QueSST Shaping</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Connect</h5>
+      <ul style="list-style:none;">
+        <li style="margin-bottom:12px;"><a href="#contact" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Partner Enquiries</a></li>
+        <li style="margin-bottom:12px;"><a href="#contact" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Investment Relations</a></li>
+        <li style="margin-bottom:12px;"><a href="#" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">LinkedIn</a></li>
+        <li style="margin-bottom:12px;"><a href="#" style="font-size:0.85rem;font-weight:400;color:rgba(200,196,184,0.5);text-decoration:none;">Research Papers</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding-top:32px;border-top:1px solid rgba(201,168,76,0.06);">
+    <p style="font-size:0.75rem;color:rgba(200,196,184,0.3);font-family:'Space Mono',monospace;">© 2026 Apex Aerodynamics. All rights reserved.</p>
+    <p style="font-size:0.75rem;color:rgba(200,196,184,0.3);font-family:'Space Mono',monospace;">Moonshot Project — Feasibility Window 2026–2036</p>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+});
+
+function animateRing() {
+  ringX += (mouseX - ringX - 16) * 0.12;
+  ringY += (mouseY - ringY - 16) * 0.12;
+  cursorRing.style.transform = `translate(${ringX}px, ${ringY}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+
+// FAQ toggle
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// Nav active highlight on scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 100) current = section.getAttribute('id');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.style.color = link.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+});
+</script>
+</body>
+</html>
